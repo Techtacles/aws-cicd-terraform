@@ -53,15 +53,7 @@ data "aws_iam_policy_document" "example" {
     actions   = ["ec2:CreateNetworkInterfacePermission"]
     resources = var.iam_resources
 
-    condition {
-      test     = "StringEquals"
-      variable = "ec2:Subnet"
-
-      values = [
-        aws_subnet.example1.arn,
-        aws_subnet.example2.arn,
-      ]
-    }
+   
 
     condition {
       test     = "StringEquals"
@@ -74,7 +66,7 @@ data "aws_iam_policy_document" "example" {
 
 resource "aws_iam_role_policy" "iam_policy" {
   role   = aws_iam_role.code_build_iam.name
-  policy = data.aws_iam_policy_document.iam_policy.json
+  policy = data.aws_iam_policy_document.example.json
 }
 
 
