@@ -10,7 +10,7 @@ module "code_build" {
 
 
 module "code_deploy" {
-    source = "./modules/cloud_deploy"
+    source = "./modules/code_deploy"
     app_name=var.app_name
     compute_platform=var.compute_platform  
 }
