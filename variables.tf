@@ -2,6 +2,8 @@ variable "region" {
     type = string
 }
 
+variable "access_key" {}
+variable "secret_key" {}
 
 #Code build iam
 variable "iam_role" {
