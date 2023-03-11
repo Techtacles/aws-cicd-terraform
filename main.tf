@@ -10,7 +10,7 @@ module "code_build" {
   github_branch       = var.github_branch
   repo_uri            = module.ecr.repo_url
   image_tag           = var.image_tag
-  code_build_id       = module.code_build.build_id
+  #code_build_id       = module.code_build.build_id
   build_spec           = var.build_spec
 }
 
