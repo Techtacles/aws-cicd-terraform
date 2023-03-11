@@ -1,6 +1,3 @@
-
-
-#Iam policy
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
@@ -14,23 +11,12 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
-resource "aws_iam_role" "code_build_iam" {
+resource "aws_iam_role" "iam_role" {
   name               = var.iam_role
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-data "aws_iam_policy_document" "example" {
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "logs:CreateLogGroup",
-      "logs:CreateLogStream",
-      "logs:PutLogEvents",
-    ]
-
-    resources = ["*"]
-  }
+data "aws_iam_policy_document" "iam_policy" {
 
   statement {
     effect = "Allow"
@@ -53,15 +39,6 @@ data "aws_iam_policy_document" "example" {
     actions   = ["ec2:CreateNetworkInterfacePermission"]
     resources = var.iam_resources
 
-    condition {
-      test     = "StringEquals"
-      variable = "ec2:Subnet"
-
-      values = [
-        aws_subnet.example1.arn,
-        aws_subnet.example2.arn,
-      ]
-    }
 
     condition {
       test     = "StringEquals"
@@ -72,30 +49,29 @@ data "aws_iam_policy_document" "example" {
 
 }
 
-resource "aws_iam_role_policy" "iam_policy" {
-  role   = aws_iam_role.code_build_iam.name
+resource "aws_iam_role_policy" "example" {
+  role   = aws_iam_role.iam_role.name
   policy = data.aws_iam_policy_document.iam_policy.json
 }
 
-
-
-#Code build project
-resource "aws_codebuild_project" "codebuild_project" {
+resource "aws_codebuild_project" "build_project" {
   name          = var.project_name
   description   = var.project_description
   build_timeout = var.project_timeout
-  service_role  = aws_iam_role.code_build_iam.arn
+  service_role  = aws_iam_role.iam_role.arn
 
   artifacts {
     type = "NO_ARTIFACTS"
   }
+
+
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/standard:1.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
 
-    
+
   }
 
 
@@ -104,6 +80,22 @@ resource "aws_codebuild_project" "codebuild_project" {
     location        = var.github_name
     git_clone_depth = 1
 
+
   }
+
+  source_version = var.github_branch
+
+
 }
 
+
+resource "aws_codebuild_webhook" "codebuild_webhook" {
+  project_name = aws_codebuild_project.build_project.name
+}
+
+resource "github_repository_webhook" "git_webhook" {
+  active     = true
+  events     = ["push"]
+  repository = var.github_repo
+
+}

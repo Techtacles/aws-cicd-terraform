@@ -21,3 +21,5 @@ variable "project_timeout" {
 variable "github_name" {
     type = string
 }
+variable "github_branch" { }
+variable "github_repo" {}
