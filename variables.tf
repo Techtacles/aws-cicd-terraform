@@ -38,6 +38,7 @@ variable "app_name"{}
 variable "compute_platform" {
     type = string
 }
+variable "code_deploy_iam_name" {}
 
 #ECR
 variable "ecr_repo_name" {}

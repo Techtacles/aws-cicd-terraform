@@ -4,27 +4,30 @@ data "aws_iam_policy_document" "assume_role" {
 
     principals {
       type        = "Service"
-      identifiers = ["codebuild.amazonaws.com"]
+      identifiers = ["codedeploy.amazonaws.com"]
     }
 
     actions = ["sts:AssumeRole"]
   }
 }
 
-resource "aws_iam_role" "iam_role" {
-  name               = var.iam_role
+resource "aws_iam_role" "code_deploy_iam" {
+  name               = var.code_deploy_iam_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
+
+resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+  role       = aws_iam_role.code_deploy_iam.name
+}
+
 
 resource "aws_codedeploy_app" "deploy_app" {
   compute_platform = var.compute_platform
   name             = var.app_name
 }
 
-resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
-  policy_arn = var.policy_arn
-  role       = var.iam_role
-}
+
 
 
 
