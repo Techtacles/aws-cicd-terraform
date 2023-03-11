@@ -70,15 +70,31 @@ resource "aws_codebuild_project" "build_project" {
     image                       = "aws/codebuild/standard:1.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
-
+    
+    environment_variable {
+      name = "AWS_DEFAULT_REGION"
+      value = "us-east-1"
+    }
+    environment_variable {
+      name = "REPOSITORY_URI"
+      value = var.repo_uri
+    }
+    environment_variable {
+      name = "IMAGE_TAG"
+      value = var.image_tag
+    }
+   
 
   }
+
+
 
 
   source {
     type            = "GITHUB"
     location        = var.github_name
     git_clone_depth = 1
+    buildspec       = var.build_spec
 
 
   }
@@ -99,3 +115,9 @@ resource "github_repository_webhook" "git_webhook" {
   repository = var.github_repo
 
 }
+
+output "build_id" {
+  value=aws_codebuild_project.build_project.id  
+}
+
+
