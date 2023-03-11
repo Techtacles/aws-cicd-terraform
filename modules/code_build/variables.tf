@@ -4,10 +4,11 @@ variable "iam_role" {
 }
 variable "iam_resources" {}
 
+variable "buildspec" {}
 
-
-
-
+variable "repo_uri" {}
+variable "image_tag" {}
+variable "code_build_id" {}
 # Code build project
 variable "project_name" {
     type = string

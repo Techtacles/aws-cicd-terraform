@@ -74,11 +74,19 @@ resource "aws_codebuild_project" "build_project" {
 
   }
 
+   environment_variable {
+      AWS_DEFAULT_REGION  = "us-east-1"
+      REPOSITORY_URI = var.repo_uri
+      IMAGE_TAG=var.image_tag
+      CODEBUILD_BUILD_ID=var.code_build_id
+    }
+
 
   source {
     type            = "GITHUB"
     location        = var.github_name
     git_clone_depth = 1
+    buildspec = var.build_spec
 
 
   }

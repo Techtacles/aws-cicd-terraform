@@ -8,6 +8,9 @@ module "code_build" {
   github_name         = var.github_name
   github_repo         = var.github_repo
   github_branch       = var.github_branch
+  repo_uri            = module.ecr.aws_ecr_repository.ecr_repo.repository_url
+  image_tag           = var.image_tag
+  code_build_id       = module.code_build.aws_codebuild_project.build_project.id
 }
 
 

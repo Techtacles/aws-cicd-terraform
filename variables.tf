@@ -10,7 +10,7 @@ variable "iam_role" {
     type = string
 }
 variable "iam_resources" {}
-
+variable "buildspec" {}
 
 # Code build project
 variable "project_name" {
@@ -32,6 +32,7 @@ variable "github_branch" {
 variable "github_repo" {
     type = string
 }
+variable "image_tag" {}
 
 #Code deploy deploy
 variable "app_name"{}
