@@ -28,13 +28,10 @@ resource "aws_codedeploy_app" "deploy_app" {
 }
 
 
-
-
-
 resource "aws_codedeploy_deployment_group" "example" {
   app_name              = aws_codedeploy_app.deploy_app.name
   deployment_group_name =var.deployment_group_name
-  service_role_arn      = aws_iam_role.iam_role.arn
+  service_role_arn      = aws_iam_role.code_deploy_iam.arn
 
   
 }
