@@ -47,3 +47,4 @@ variable "owner_id" {}
 variable "instance_type" {}
 variable "policy_arn" {}
 variable "deployment_group_name" {}
+variable "ami_id" {}
