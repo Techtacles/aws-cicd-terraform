@@ -10,7 +10,7 @@ variable "iam_role" {
     type = string
 }
 variable "iam_resources" {}
-variable "buildspec" {}
+variable "build_spec" {}
 
 # Code build project
 variable "project_name" {

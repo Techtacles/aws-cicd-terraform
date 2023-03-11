@@ -4,7 +4,7 @@ variable "iam_role" {
 }
 variable "iam_resources" {}
 
-variable "buildspec" {}
+variable "build_spec" {}
 
 variable "repo_uri" {}
 variable "image_tag" {}
