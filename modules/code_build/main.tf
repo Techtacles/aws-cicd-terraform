@@ -83,10 +83,7 @@ resource "aws_codebuild_project" "build_project" {
       name = "IMAGE_TAG"
       value = var.image_tag
     }
-    environment_variable {
-      name = "CODEBUILD_BUILD_ID"
-      value = aws_codebuild_project.build_project.id
-    }
+   
 
   }
 
