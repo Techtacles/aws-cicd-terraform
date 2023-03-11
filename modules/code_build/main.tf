@@ -109,12 +109,12 @@ resource "aws_codebuild_webhook" "codebuild_webhook" {
   project_name = aws_codebuild_project.build_project.name
 }
 
-resource "github_repository_webhook" "git_webhook" {
-  active     = true
-  events     = ["push"]
-  repository = var.github_repo
+#resource "github_repository_webhook" "git_webhook" {
+#  active     = true
+#  events     = ["push"]
+#  repository = var.github_repo
 
-}
+#}
 
 output "build_id" {
   value=aws_codebuild_project.build_project.id  
