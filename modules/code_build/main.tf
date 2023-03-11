@@ -70,11 +70,22 @@ resource "aws_codebuild_project" "build_project" {
     image                       = "aws/codebuild/standard:1.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    
     environment_variable {
-      AWS_DEFAULT_REGION = "us-east-1"
-      REPOSITORY_URI     = var.repo_uri
-      IMAGE_TAG          = var.image_tag
-      CODEBUILD_BUILD_ID = var.code_build_id
+      name = "AWS_DEFAULT_REGION"
+      value = "us-east-1"
+    }
+    environment_variable {
+      name = "REPOSITORY_URI"
+      value = var.repo_uri
+    }
+    environment_variable {
+      name = "IMAGE_TAG"
+      value = var.image_tag
+    }
+    environment_variable {
+      name = "CODEBUILD_BUILD_ID"
+      value = var.code_build_id
     }
 
   }
