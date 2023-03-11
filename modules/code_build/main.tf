@@ -85,7 +85,7 @@ resource "aws_codebuild_project" "build_project" {
     }
     environment_variable {
       name = "CODEBUILD_BUILD_ID"
-      value = var.code_build_id
+      value = aws_codebuild_project.build_project.id
     }
 
   }
