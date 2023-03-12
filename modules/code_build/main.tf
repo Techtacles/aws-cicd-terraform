@@ -59,6 +59,7 @@ resource "aws_codebuild_project" "build_project" {
   description   = var.project_description
   build_timeout = var.project_timeout
   service_role  = aws_iam_role.iam_role.arn
+  buildspec       = var.build_spec
 
   artifacts {
     type = "NO_ARTIFACTS"
@@ -88,13 +89,19 @@ resource "aws_codebuild_project" "build_project" {
   }
 
 
+  logs_config {
+    cloudwatch_logs {
+      group_name  = "log-group"
+      stream_name = "log-stream"
+    }
 
+  }
 
   source {
     type            = "GITHUB"
     location        = var.github_name
     git_clone_depth = 1
-    buildspec       = var.build_spec
+    
 
 
   }
@@ -120,4 +127,7 @@ output "build_id" {
   value=aws_codebuild_project.build_project.id  
 }
 
+output "trigger_arn"{
+  value = aws_codebuild_project.build_project.arn
+}
 

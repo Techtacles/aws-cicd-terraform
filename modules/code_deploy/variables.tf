@@ -5,3 +5,4 @@ variable "compute_platform" {
 variable "code_deploy_iam_name" {}
 variable "policy_arn" {}
 variable "deployment_group_name" {}
+variable "trigger_arn" { }

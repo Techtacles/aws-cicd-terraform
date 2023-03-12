@@ -11,7 +11,7 @@ module "code_build" {
   repo_uri            = module.ecr.repo_url
   image_tag           = var.image_tag
   #code_build_id       = module.code_build.build_id
-  build_spec           = var.build_spec
+  build_spec = var.build_spec
 }
 
 
@@ -22,6 +22,7 @@ module "code_deploy" {
   code_deploy_iam_name  = var.code_deploy_iam_name
   policy_arn            = var.policy_arn
   deployment_group_name = var.deployment_group_name
+  trigger_arn           = module.code_build.trigger_arn
 }
 
 module "ec2" {
